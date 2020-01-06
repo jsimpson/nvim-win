@@ -100,8 +100,6 @@ set nowb
 set tags=tags
 
 "colorscheme {{{1
-set background=dark
-
 set t_Co=256
 set background=dark
 colorscheme jellybeans
@@ -120,3 +118,24 @@ let g:lightline = {
   \   'charvaluehex': '0x%B'
   \ },
   \ }
+
+" automatically strip whitespace on saves
+au BufWritePre *.c,*.cpp,*.h,*.js,*.lua :%s/\s\+$//e
+
+" set spacing
+au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+au FileType es6,javascript,yaml setlocal ts=2 sts=2 sw=2 expandtab
+au FileType c,h setlocal ts=4 sts=4 sw=4 expandtab
+
+" set comment characters
+au FileType python,sh,bash let StartComment='#' | let EndComment=""
+au FileType html let StartComment='<!--' | let EndComment="--->"
+au FileType c,javascript,c let StartComment='//' | let EndComment=""
+au FileType cpp let StartComment='/*' | let EndComment="*/"
+au FileType vim let StartComment='\"' | let EndComment=""
+
+" use rainbow parenthesis
+augroup rainbow_parens
+  au!
+  au FileType c,cpp,js,lua RainbowParentheses
+augroup END

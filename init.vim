@@ -96,8 +96,8 @@ set nobackup
 set noswapfile
 set nowb
 
-"ctags {{{2
-set tags=tags
+"windows specific behaviors
+source $VIMRUNTIME/mswin.vim
 
 "colorscheme {{{1
 set t_Co=256

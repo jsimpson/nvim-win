@@ -3,34 +3,43 @@ set nocp
 "plugins {{{1
 call plug#begin('~\vimfiles\plugged')
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'itchyny/lightline.vim'
-
-Plug 'vim-scripts/c.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'tbastos/vim-lua'
-
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-unimpaired'
-
-Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'tpope/vim-abolish'
 
 call plug#end()
 
-"source my crap
-for f in split(globpath(&runtimepath, '_*.vim'), "\n")
-    exe 'source '. f
-endfor
+if !exists('g:vscode')
+  "plugins {{{1
+  call plug#begin('~\vimfiles\plugged')
 
-syntax on
-filetype plugin indent on
+  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'itchyny/lightline.vim'
+
+  Plug 'vim-scripts/c.vim'
+  Plug 'pangloss/vim-javascript'
+  Plug 'tbastos/vim-lua'
+
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-vinegar'
+  Plug 'tpope/vim-markdown'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-unimpaired'
+
+  Plug 'junegunn/rainbow_parentheses.vim'
+
+  call plug#end()
+
+  "source my crap
+  for f in split(globpath(&runtimepath, '_*.vim'), "\n")
+      exe 'source '. f
+  endfor
+
+  syntax on
+  filetype plugin indent on
+endif
 
 let mapleader=","
 
@@ -97,27 +106,29 @@ set noswapfile
 set nowb
 
 "windows specific behaviors
-source $VIMRUNTIME/mswin.vim
+"source $VIMRUNTIME/mswin.vim
 
-"colorscheme {{{1
-set t_Co=256
-set background=dark
-colorscheme jellybeans
+if !exists('g:vscode')
+  "colorscheme {{{1
+  set t_Co=256
+  set background=dark
+  colorscheme jellybeans
 
-" rainbow_parentheses{{{2
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+  " rainbow_parentheses{{{2
+  let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
-" lightline
-let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'readonly', 'filename', 'modified', 'charvaluehex' ] ]
-  \ },
-  \ 'component': {
-  \   'charvaluehex': '0x%B'
-  \ },
-  \ }
+  " lightline
+  let g:lightline = {
+    \ 'colorscheme': 'jellybeans',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename', 'modified', 'charvaluehex' ] ]
+    \ },
+    \ 'component': {
+    \   'charvaluehex': '0x%B'
+    \ },
+    \ }
+endif
 
 " automatically strip whitespace on saves
 au BufWritePre *.c,*.cpp,*.h,*.js,*.lua :%s/\s\+$//e
@@ -134,8 +145,10 @@ au FileType c,javascript,c let StartComment='//' | let EndComment=""
 au FileType cpp let StartComment='/*' | let EndComment="*/"
 au FileType vim let StartComment='\"' | let EndComment=""
 
-" use rainbow parenthesis
-augroup rainbow_parens
-  au!
-  au FileType c,cpp,js,lua RainbowParentheses
-augroup END
+if !exists('g:vscode')
+  " use rainbow parenthesis
+  augroup rainbow_parens
+    au!
+    au FileType c,cpp,js,lua RainbowParentheses
+  augroup END
+endif
